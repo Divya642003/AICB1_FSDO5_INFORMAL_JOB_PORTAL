@@ -24,14 +24,7 @@ const recuiter_details = async (req, res) => {
 
 
 const recuiter_create = async (req, res) => {
-    let {name, mobile_number, address, adharcard_number, password, date} = req.body;
-    const recuiter = new Recuiter({name, mobile_number, address, adharcard_number, password, date});
-    try{
-        const saveRecuiter = await recuiter.save();
-        res.send(saveRecuiter);
-    } catch(error) {
-        res.status(400).send(error);
-    }
+    
     
     };
 

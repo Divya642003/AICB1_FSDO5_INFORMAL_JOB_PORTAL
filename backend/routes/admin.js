@@ -1,8 +1,16 @@
 const router = require("express").Router();
 const adminController = require('../controllers/adminController');
+const {body, validationResult}= require(`express-validator`);
 
 
-router.post("/", adminController.admin_create);
+router.post("/",[
+
+    //validating the request body parameters
+    body('name',`Enter a valid name`).isLength({min:3}),
+    body('email',"Enter a valid email").isEmail(),
+    body(`password`,"Password must be atleast 5 characters ").isLength({min:5})
+
+], adminController.admin_create);
 router.get("/", adminController.admin_all);
 router.get("/:adminId", adminController.admin_details);
 router.put("/:adminId", adminController.admin_update);
