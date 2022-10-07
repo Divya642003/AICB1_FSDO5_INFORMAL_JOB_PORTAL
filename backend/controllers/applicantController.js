@@ -35,7 +35,7 @@ const applicant_create = async (req, res) => {
     }
     
     //check whether the applicant with same email exists already
-    let applicant=await Applicant.findOne({email:req.body.mobile_number});
+    let applicant=await Applicant.findOne({mobile_number:req.body.mobile_number});
     if(applicant){
         return res.status(400).json({success,error:"Sorry a applicant with this mobile number already exists"});
     }
@@ -59,12 +59,12 @@ const applicant_create = async (req, res) => {
         //if admin is created this will be executed
         applicant=>{
             const data={
-                user:{
+                applicant:{
                     id:applicant.id
                 }
             };
 
-            //jwt token that will provide secure access to user
+            //jwt token that will provide secure access to applicant
             const authToken=jwt.sign(data,JWT_SECRET);
             success=true;
             //console.log(authToken);
@@ -124,11 +124,58 @@ const applicant_delete = async (req, res) => {
 
 };
 
+const applicant_login=async (req,res)=>{
+    //console.log(req.body);
+    let success=false;
+    //if there are errors return bad request and the errors
+    const errors= validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors:errors.array()});
+    }
+    
+    
+
+    try
+    {
+        let applicant= await Applicant.findOne({mobile_number:req.body.mobile_number});
+        if(!applicant)
+        {
+            return res.status(400).json({success,error:"Please try to login with correct credentials"});
+        }
+
+        const passwordCompare= await bcrypt.compare(req.body.password,applicant.password);
+        if(!passwordCompare){
+            return res.status(400).json({success,error:"Please try to login with correct credentials"});
+        }
+
+        const data={
+            applicant:{
+                id:applicant.id
+            }
+        };
+
+        //jwt token that will provide secure access to applicant
+        const authToken=jwt.sign(data,JWT_SECRET);
+        success=true;
+        //console.log(authToken);
+        res.json({success,authToken});
+        
+
+    }catch(err)
+    {
+        console.log(err.message);
+        res.status(500).send("Internal Server Error");
+    }
+
+    
+}
+
 module.exports = {
     applicant_all,
     applicant_details,
     applicant_create,
     applicant_update,
-    applicant_delete
+    applicant_delete,
+    applicant_login
 }
 

@@ -15,5 +15,13 @@ router.get("/", adminController.admin_all);
 router.get("/:adminId", adminController.admin_details);
 router.put("/:adminId", adminController.admin_update);
 router.delete("/:adminId", adminController.admin_delete);
+router.post('/login',[
+
+    //validating the request body parameters
+    
+    body('email',"Enter a valid email").isEmail(),
+    body(`password`,"Password cannot be empty").exists()
+
+],adminController.admin_login);
 
 module.exports = router;

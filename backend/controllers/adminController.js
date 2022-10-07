@@ -17,8 +17,8 @@ res.json(admins);
 
 const admin_details = async (req, res) => {
     try{
-        const user = await Admin.findById(req.params.adminId);
-        res.json(user);
+        const admin = await Admin.findById(req.params.adminId);
+        res.json(admin);
             } catch(error) {
                 res.json({message:error});
             }
@@ -36,7 +36,7 @@ const admin_create = async (req, res) => {
     //check whether the admin with same email exists already
     let admin=await Admin.findOne({email:req.body.email});
     if(admin){
-        return res.status(400).json({success,error:"Sorry a user with this email already exists"});
+        return res.status(400).json({success,error:"Sorry a admin with this email already exists"});
     }
 
     //ecrypting password before storing
@@ -56,12 +56,12 @@ const admin_create = async (req, res) => {
         //if admin is created this will be executed
         admin=>{
             const data={
-                user:{
+                admin:{
                     id:admin.id
                 }
             };
 
-            //jwt token that will provide secure access to user
+            //jwt token that will provide secure access to admin
             const authToken=jwt.sign(data,JWT_SECRET);
             success=true;
             //console.log(authToken);
@@ -109,11 +109,58 @@ const admin_delete = async (req, res) => {
 
 };
 
+const admin_login=async (req,res)=>{
+    //console.log(req.body);
+    let success=false;
+    //if there are errors return bad request and the errors
+    const errors= validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors:errors.array()});
+    }
+    
+    
+
+    try
+    {
+        let admin= await Admin.findOne({email:req.body.email});
+        if(!admin)
+        {
+            return res.status(400).json({success,error:"Please try to login with correct credentials"});
+        }
+
+        const passwordCompare= await bcrypt.compare(req.body.password,admin.password);
+        if(!passwordCompare){
+            return res.status(400).json({success,error:"Please try to login with correct credentials"});
+        }
+
+        const data={
+            admin:{
+                id:admin.id
+            }
+        };
+
+        //jwt token that will provide secure access to admin
+        const authToken=jwt.sign(data,JWT_SECRET);
+        success=true;
+        //console.log(authToken);
+        res.json({success,authToken});
+        
+
+    }catch(err)
+    {
+        console.log(err.message);
+        res.status(500).send("Internal Server Error");
+    }
+
+    
+}
+
 module.exports = {
     admin_all,
     admin_details,
     admin_create,
     admin_update,
-    admin_delete
+    admin_delete,
+    admin_login
 }
 

@@ -16,5 +16,14 @@ router.get("/", applicantController.applicant_all);
 router.get("/:applicantId", applicantController.applicant_details);
 router.put("/:applicantId", applicantController.applicant_update);
 router.delete("/:applicantId", applicantController.applicant_delete);
+router.post('/login',[
+
+     //validating the request body parameters
+     
+     body('mobile_number',"Enter a valid mobile_number").isLength({min:10}),
+     body(`password`,"Password cannot be empty").exists()
+ 
+ ],adminController.applicant_login);
+ 
 
 module.exports = router;
