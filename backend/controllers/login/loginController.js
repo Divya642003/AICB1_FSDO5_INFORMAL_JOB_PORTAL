@@ -39,8 +39,9 @@ const admin_login = async (req,res)=>{
         //jwt token that will provide secure access to user
         const authToken=jwt.sign(data,process.env.JWT_SECRET);
         success=true;
+        tokenfor= "admin";
         //console.log(authToken);
-        res.json({success,authToken});
+        res.json({success,tokenfor,authToken});
         
 
     }catch(err)
@@ -87,8 +88,9 @@ const applicant_login = async (req,res)=>{
         //jwt token that will provide secure access to user
         const authToken=jwt.sign(data,process.env.JWT_SECRET);
         success=true;
+        tokenfor= "applicant";
         //console.log(authToken);
-        res.json({success,authToken});
+        res.json({success,tokenfor,authToken});
         
 
     }catch(err)
@@ -132,8 +134,9 @@ const recuiter_login = async (req,res)=>{
         //jwt token that will provide secure access to user
         const authToken=jwt.sign(data,process.env.JWT_SECRET);
         success=true;
+        tokenfor= "recuiter";
         //console.log(authToken);
-        res.json({success,authToken});
+        res.json({success,tokenfor,authToken});
         
 
     }catch(err)
