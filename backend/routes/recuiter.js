@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const recuiterController = require('../controllers/recuiterController');
-
+const {body, validationResult}= require(`express-validator`);
 
 router.post("/",[
     //validating the request body parameters
