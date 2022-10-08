@@ -41,7 +41,8 @@ const admin_login = async (req,res)=>{
         success=true;
         tokenfor= "admin";
         //console.log(authToken);
-        res.json({success,tokenfor,authToken});
+        adminId = admin.id;
+        res.json({success,tokenfor,authToken, adminId});
         
 
     }catch(err)
@@ -90,8 +91,9 @@ const applicant_login = async (req,res)=>{
         success=true;
         tokenfor= "applicant";
         //console.log(authToken);
-        res.json({success,tokenfor,authToken});
-        
+        applicantId = applicant.id;
+        res.json({success,tokenfor,authToken,applicantId});
+       
 
     }catch(err)
     {
@@ -135,8 +137,9 @@ const recuiter_login = async (req,res)=>{
         const authToken=jwt.sign(data,process.env.JWT_SECRET);
         success=true;
         tokenfor= "recuiter";
+        recuiterId = recuiter.id;
         //console.log(authToken);
-        res.json({success,tokenfor,authToken});
+        res.json({success,tokenfor,authToken, recuiterId});
         
 
     }catch(err)

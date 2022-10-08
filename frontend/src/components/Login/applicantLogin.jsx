@@ -27,6 +27,7 @@ function AdminLogin() {
         if(json.success){
             sessionStorage.setItem('token',json.authToken);
 			sessionStorage.setItem('tokenfor',json.tokenfor);
+            sessionStorage.setItem('applicantId',json.applicantId);
             navigate("/");
         }
         else{
@@ -55,6 +56,7 @@ function AdminLogin() {
 				<input type="text"  onChange={e => setPassword(e.target.value)} className="form-control" name="password" placeholder="Password" required="required" />
 			</div>
         </div>
+        <div class="text-center">You hava not a account <a href="/applicantSignup">Create Account</a></div>
 		<div className="form-group">
             <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-lg">Login</button>
         </div>

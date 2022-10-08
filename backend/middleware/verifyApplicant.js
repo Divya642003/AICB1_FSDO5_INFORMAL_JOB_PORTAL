@@ -15,6 +15,9 @@ const verifyRecuiter = (req,res,next)=>
         var adminId = data.admin;
         var recuiterId = data.recuiter;
         var applicantId = data.applicant;
+        console.log(adminId);
+        console.log(recuiterId);
+        
         if(adminId == undefined){
             if(applicantId == undefined){
             Recuiter.findById(recuiterId.id, function (err, Result) {

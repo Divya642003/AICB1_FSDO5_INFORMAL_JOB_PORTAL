@@ -83,8 +83,7 @@ const applicant_update = async (req, res) => {
           address: req.body.address,
           mobile_number: req.body.mobile_number,
           adharcard_number: req.body.adharcard_number,
-          experience: req.body.experience,
-          date: req.body.date,
+          experience: req.body.experience
         };
     
         const updatedApplicant = await Applicant.findByIdAndUpdate(

@@ -27,6 +27,7 @@ function AdminLogin() {
         if(json.success){
             sessionStorage.setItem('token',json.authToken);
 			sessionStorage.setItem('tokenfor',json.tokenfor);
+            sessionStorage.setItem('recuiterId',json.recuiterId);
             navigate("/");
         }
         else{

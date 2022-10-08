@@ -16,7 +16,7 @@ router.post("/",[
 ], applicantController.applicant_create);
 router.get("/", verifyRecuiter, applicantController.applicant_all);
 router.get("/:applicantId", verifyApplicant, applicantController.applicant_details);
-router.put("/:applicantId", verifyApplicant, applicantController.applicant_update);
+router.put("/:applicantId", verifyRecuiter, applicantController.applicant_update);
 router.delete("/:applicantId", verifyRecuiter, applicantController.applicant_delete);
 
 module.exports = router;

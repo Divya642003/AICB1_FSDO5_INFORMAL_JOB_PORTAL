@@ -18,6 +18,7 @@ app.use(`/api/admin`,require(`./routes/admin`));
 app.use(`/api/applicant`, require(`./routes/applicant`));
 app.use(`/api/recuiter`, require(`./routes/recuiter`));
 app.use(`/api/job`, require(`./routes/job`));
+app.use(`/api/applyRequest`, require(`./routes/applyRequset`));
 
 app.get('/',(req,res)=>{
     res.send("Hello World");
